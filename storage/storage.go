@@ -44,7 +44,11 @@ func (d *DriverStorage) Delete(key int) error {
 
 // Get gets driver from storage and an error if nothing found
 func (d *DriverStorage) Get(key int) (*Driver, error) {
-	return nil, nil
+	driver, ok := d.drivers[key]
+	if !ok {
+		return nil, errors.New("Driver does not exist")
+	}
+	return driver, nil
 }
 
 // Nearest returns nearest drivers by locaion
