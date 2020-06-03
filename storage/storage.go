@@ -1,5 +1,7 @@
 package storage
 
+import "errors"
+
 type (
 	// Location used for storing driver's location
 	Location struct {
@@ -32,6 +34,11 @@ func (d *DriverStorage) Set(key int, driver *Driver) {
 
 // Delete removes driver from storage by key
 func (d *DriverStorage) Delete(key int) error {
+	_, ok := d.drivers[key]
+	if !ok {
+		return errors.New("Driver does not exist")
+	}
+	delete(d.drivers, key)
 	return nil
 }
 
